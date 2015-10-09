@@ -57,18 +57,15 @@ export default Ember.Controller.extend({
 			var description = this.get('description');
 			var self = this;
 
-			if (Ember.isPresent(title) 
-				&& Ember.isPresent(platform) 
-				&& Ember.isPresent(description)) {
+			if (Ember.isPresent(title) && Ember.isPresent(platform) && Ember.isPresent(description)) {
 				// form is valid
-
 				var game = self.store.createRecord('game', {
 					title: title,
 					platform: platform,
 					description: description
 				});
 
-				game.save().then(function (game) {
+				game.save().then(function () {
 					self.searchGame();
 					self.send('closeModal');
 				}).catch(function (failure) {
