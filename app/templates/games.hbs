@@ -1,0 +1,54 @@
+{{#md-navbar name='Games Library' class='teal lighten-3' homeRoute='games'}}
+	<li>
+		<form autocomplete=off action="#" onsubmit="return false;">
+			<div class="input-field">
+				{{input placeholder='Search' value=searchGameValue type="search" class="field"}}
+				<label for="search-field"><i class="mdi-action-search"></i></label>
+				<i class="mdi-navigation-close close" {{action "resetSearch"}}></i>
+			</div>
+		</form>
+	</li>
+{{/md-navbar}}
+
+<div class="collection">
+	{{#each games as |game|}}
+{{!-- 	<a href="#!" class="collection-item">{{game.title}}</a> --}}
+		{{#md-card title=game.title class="game"}}
+			{{#md-card-content}}<p>{{game.description}}</p>{{/md-card-content}}
+			{{#md-card-action}}
+				<div class="right-align">{{game.platform}}</div>
+			{{/md-card-action}}
+		{{/md-card}}
+	{{/each}}
+</div>
+
+{{#md-fixed-btns
+	class="add-new-game" 
+	btnIcon="mdi-content-add"
+	btnClass="btn-large red waves-effect waves-light"
+	action="add"
+	actionArgs="0"}}
+{{/md-fixed-btns}}
+
+{{#if modalIsOpen}}
+	{{#md-modal close='closeModal'}}
+		<div class="modal-content">
+			<h4>Add a game to the library</h4>
+			{{#md-card-panel }}
+				{{md-input value=title label='Title' type="text" class="col s12" validate=true required=true}}
+				{{md-select content=platforms value=selectedPlatform 
+					label="Platforms" 
+					prompt="Please choose..."
+					optionLabelPath="content.value"
+					optionValuePath="content" class="col s12"
+					validate=true
+					required=true}}
+				{{md-textarea label='Description' value=description class="col s12" validate=true required=true}}
+			{{/md-card-panel}}
+		</div>
+		<div class="modal-footer">
+			<a class="modal-action modal-close waves-effect waves-orange btn-flat agree-button" {{action 'submitGame'}}>Add</a>
+			<a class="modal-action modal-close waves-effect waves-red btn-flat cancel-button" {{action 'closeModal'}}>Cancel</a>
+		</div>
+	{{/md-modal}}
+{{/if}}
