@@ -42,12 +42,6 @@ export default Ember.Controller.extend({
 		Ember.run.debounce(this, this.searchGame, 369);
 	}.observes('searchGameValue'),
 
-	resetAddForm: function() {
-		this.set('title', '');
-		this.set('selectedPlatform', null);
-		this.set('description', '');
-	},
-
 	actions: {
 		add: function() {
 			this.set('modalIsOpen', true);
@@ -86,7 +80,9 @@ export default Ember.Controller.extend({
 		},
 
 		closeModal: function() {
-			this.resetAddForm();
+			this.set('title', '');
+			this.set('selectedPlatform', null);
+			this.set('description', '');
 			this.set('modalIsOpen', false);
 		}
 	}
